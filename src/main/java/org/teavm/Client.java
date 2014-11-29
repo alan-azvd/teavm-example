@@ -18,7 +18,11 @@ public class Client {
     private static final HTMLDocument document = window.getDocument();
 
     public static void main(String[] args) {
-
+        Client cli = new Client();
+        cli.init();
+    }
+    
+    public void init() {
         final HTMLElement div = document.createElement("div");
         document.getBody().appendChild(div);
 
@@ -27,22 +31,26 @@ public class Client {
             @Override
             public void handleEvent(Event event) {
                 //div.appendChild(document.createTextNode("Teste"));
-                final XMLHttpRequest xhr = window.createXMLHttpRequest();
-                xhr.setOnReadyStateChange(new ReadyStateChangeHandler() {
-                    @Override
-                    public void stateChanged() {
-                        if (xhr.getReadyState() == XMLHttpRequest.DONE) {
-                            execute(xhr);
-                        }
-                    }
-                });
-                xhr.open("GET", "pessoas");
-                xhr.send();
+                test();
             }
         });
     }
-    
-    private static void execute(XMLHttpRequest xhr) {
+
+    private void test() {
+        final XMLHttpRequest xhr = window.createXMLHttpRequest();
+        xhr.setOnReadyStateChange(new ReadyStateChangeHandler() {
+            @Override
+            public void stateChanged() {
+                if (xhr.getReadyState() == XMLHttpRequest.DONE) {
+                    execute(xhr);
+                }
+            }
+        });
+        xhr.open("GET", "pessoas");
+        xhr.send();
+    }
+
+    private void execute(XMLHttpRequest xhr) {
         System.out.println(xhr.getResponseText());
     }
 }
